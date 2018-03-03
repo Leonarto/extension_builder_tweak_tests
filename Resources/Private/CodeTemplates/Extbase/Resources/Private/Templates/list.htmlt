@@ -1,0 +1,71 @@
+{namespace k=EBT\ExtensionBuilder\ViewHelpers}<f:format.raw><k:openingTag>html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true"</k:openingTag>
+<k:openingTag>f:layout name="Default" /</k:openingTag>
+
+This Template is responsible for creating a table of domain objects.
+
+
+If you modify this template, do not forget to change the overwrite settings
+in /Configuration/ExtensionBuilder/settings.yaml:
+  Resources:
+    Private:
+      Templates:
+        List.html: keep
+
+Otherwise your changes will be overwritten the next time you save the extension in the extension builder
+
+<k:openingTag>f:section name="main"</k:openingTag>
+
+<k:openingTag>f:flashMessages /</k:openingTag>
+
+<div class="panel panel-default">
+  <!-- Default panel contents -->
+  <div class="panel-heading"><h3 class="pull-left">Lista de {domainObject.name}</h1><k:openingTag>f:link.action class="btn btn-default pull-right" action="new"</k:openingTag>Nuevo {domainObject.name}<k:openingTag>/f:link.action</k:openingTag><div class="clearfix"></div></div>
+    <table  class="table table-striped table-hover table-condensed table-bordered sortable" id="{extension.shortExtensionKey}-table">
+        <k:format.removeMultipleNewlines>
+
+        <thead>
+            <tr>
+                <f:comment>Building up the table header</f:comment>
+                <f:for each="{domainObject.properties}" as="property"><f:if condition="{property.isDisplayable}">
+                    <f:if condition="{property.dataType} != 'PasswordProperty'">
+                        <th><k:openingTag>f:translate key="{property.labelNamespace}" /</k:openingTag></th>
+                    </f:if>
+                </f:if></f:for>
+                <th colspan="2">Acciones </th>
+            </tr>
+        </thead>
+        </k:format.removeMultipleNewlines>
+
+        <k:format.removeMultipleNewlines>
+        <f:comment>Creating the f:for which loops through all objects</f:comment>
+
+        <tbody>
+            <k:openingTag>f:for each="{domainObject.name -> k:format.lowercaseFirst() -> k:pluralize() -> k:curlyBrackets()}" as="{domainObject.name -> k:format.lowercaseFirst()}"</k:openingTag>
+                <tr>
+
+                    <f:for each="{domainObject.properties}" as="property"><f:if condition="{property.isDisplayable}">
+                        <f:if condition="{property.dataType} != 'PasswordProperty'">
+                            <f:if condition="{property.dataType} == 'BooleanProperty'">
+                                <f:then><td>{property.nameToBeDisplayedInFluidTemplate}</td></f:then>
+                                <f:else>
+                                    <f:if condition="{property.dataType} == 'ZeroToManyRelation'">
+                                        <f:then><td>{property.nameToBeDisplayedInFluidTemplate}</td></f:then>
+                                        <f:else><td><k:openingTag>f:link.action action="show" arguments="<k:curlyBrackets>{domainObject.name -> k:format.lowercaseFirst()} : {domainObject.name -> k:format.lowercaseFirst()}</k:curlyBrackets>"</k:openingTag> <k:curlyBrackets>{domainObject.name -> k:format.lowercaseFirst()}.{property.nameToBeDisplayedInFluidTemplate}</k:curlyBrackets><k:openingTag>/f:link.action</k:openingTag></td></f:else>
+                                    </f:if>
+                                </f:else>
+                            </f:if>
+                        </f:if>
+                    </f:if></f:for>
+
+                    <td><k:openingTag>f:link.action class="btn btn-warning btn-sm" action="edit" arguments="<k:curlyBrackets>{domainObject.name -> k:format.lowercaseFirst()} : {domainObject.name -> k:format.lowercaseFirst()}</k:curlyBrackets>"</k:openingTag>Editar<k:openingTag>/f:link.action</k:openingTag></td>
+                    <td><k:openingTag>f:link.action class="btn btn-danger btn-sm" action="delete" arguments="<k:curlyBrackets>{domainObject.name -> k:format.lowercaseFirst()} : {domainObject.name -> k:format.lowercaseFirst()}</k:curlyBrackets>"</k:openingTag>Borrar<k:openingTag>/f:link.action</k:openingTag></td>
+                </tr>
+            <k:openingTag>/f:for</k:openingTag>
+        </tbody>
+
+        </k:format.removeMultipleNewlines>
+    </table>
+</div>
+
+<k:openingTag>/f:section</k:openingTag>
+<k:openingTag>/html</k:openingTag></f:format.raw>

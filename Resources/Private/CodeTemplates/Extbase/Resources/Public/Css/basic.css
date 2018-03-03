@@ -1,0 +1,25 @@
+/***********************************GENERAL***************************************/
+
+.section.section-default{
+  padding-top: 0;
+}
+
+/********************************FORMULARIO****************************************/
+.form-group{
+  margin-bottom: 0;
+}
+
+.well{
+  border-radius: 0.3em;
+}
+
+/**********************************TABLES AND PANELS****************************************/
+
+table.table{
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.panel{
+  border-radius: 0.3em;
+}

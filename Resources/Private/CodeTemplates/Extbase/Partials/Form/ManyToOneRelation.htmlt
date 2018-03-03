@@ -1,0 +1,7 @@
+{namespace k=EBT\ExtensionBuilder\ViewHelpers}f:form.select
+        id="{property.name}"
+        property="{property.name}"
+        options="<k:curlyBrackets>{property.name}s</k:curlyBrackets>"
+        optionValueField="uid"
+        optionLabelField="uid"
+        class="form-control doSelect2"
